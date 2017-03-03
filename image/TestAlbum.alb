@@ -1,0 +1,52 @@
+<webalbum version="1.8.2">
+  <title>Test-Album</title>
+  <description>
+    <line>Various photographs that I'd like to share on the Web.</line>
+  </description>
+  <settings>
+    <photosize width="800" height="600">large</photosize>
+    <thumbsize width="100" height="75">medium</thumbsize>
+    <homeurl>http://45.78.29.142/</homeurl>
+    <outputdirectory>C:\Users\Admin\Desktop\TestAlbum\</outputdirectory>
+    <navigateinloop>True</navigateinloop>
+  </settings>
+  <layout>
+    <colourscheme>Default</colourscheme>
+    <pagecolor>16777215</pagecolor>
+    <textcolor>0</textcolor>
+    <linkcolor>16711680</linkcolor>
+    <hotlinkcolor>255</hotlinkcolor>
+    <thumbnailrows>5</thumbnailrows>
+    <thumbnailcols>4</thumbnailcols>
+    <navigationbelowphoto>True</navigationbelowphoto>
+  </layout>
+  <photographs>
+    <photo>
+      <caption>
+        <line>适当放松的</line>
+      </caption>
+      <filename>C:\Users\Public\Pictures\Sample Pictures\Tulips.jpg</filename>
+    </photo>
+    <photo>
+      <filename>C:\Users\Public\Pictures\Sample Pictures\Chrysanthemum.jpg</filename>
+    </photo>
+    <photo>
+      <filename>C:\Users\Public\Pictures\Sample Pictures\Desert.jpg</filename>
+    </photo>
+    <photo>
+      <filename>C:\Users\Public\Pictures\Sample Pictures\Hydrangeas.jpg</filename>
+    </photo>
+    <photo>
+      <filename>C:\Users\Public\Pictures\Sample Pictures\Jellyfish.jpg</filename>
+    </photo>
+    <photo>
+      <filename>C:\Users\Public\Pictures\Sample Pictures\Koala.jpg</filename>
+    </photo>
+    <photo>
+      <filename>C:\Users\Public\Pictures\Sample Pictures\Lighthouse.jpg</filename>
+    </photo>
+    <photo>
+      <filename>C:\Users\Public\Pictures\Sample Pictures\Penguins.jpg</filename>
+    </photo>
+  </photographs>
+</webalbum>
