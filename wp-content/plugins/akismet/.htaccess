@@ -10,6 +10,7 @@
 <IfModule mod_authz_core.c>
 	Require all denied
 </IfModule>
+
 # Akismet CSS and JS
 <FilesMatch "^(form\.js|akismet\.js|akismet\.css)$">
 	<IfModule !mod_authz_core.c>
