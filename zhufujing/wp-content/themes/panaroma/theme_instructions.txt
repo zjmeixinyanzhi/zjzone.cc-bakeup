@@ -1,0 +1,50 @@
+
+	/* Panaroma WordPress Theme */
+===================================================
+
+Please follow to this instructions to handle theme options. After Installing the theme you can find Theme options menu under Appearance.
+
+// Basic Settings
+-----------------------
+
+1) Logo: Upload Logo 
+2) Copyright Text: Add copyright text.
+3) Feature Image checkbox: Check this to disable feature image for inner pages.
+4) Color Scheme: Select color scheme for theme.
+5) Pagination gradient color( top/bottom): Select pagination  gradient color for top and bottom.
+
+
+
+// Layout Settings
+-----------------------
+
+1) Select layout of theme.
+2) Add custom css.
+
+
+
+// Homepage Slider
+---------------------------
+Here you can add upto 5 slider
+
+1) Upload slider image.
+2) Add slide title.
+3) Add some description about slider.
+4) Add slider link.
+
+
+
+// Social Settings
+-----------------------------
+
+You can add your social links here.
+
+
+// Contact details for footer
+--------------------------------------
+
+1) Add company name
+2) Address 1
+3) Address 2
+4) Add phone number.
+5) Add email address.

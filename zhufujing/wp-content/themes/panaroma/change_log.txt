@@ -1,0 +1,41 @@
+Version 1.0
+i) Initial Release.
+
+Version 1.1
+i) Demo link changed.
+
+Version 1.2
+i) Resolved issues ask by theme reviewer.
+
+Version 1.3
+i) Resolved issues asked by theme reviewer.
+
+Version 1.3.1
+i) Resolved title tag issue and some changes ask by reviewer.
+
+Version 1.3.2
+i) Resolved minor css issue.
+
+Version 1.3.3
+i) Screenshot changed.
+
+Version 1.3.4
+i) Removed unused files.
+
+Version 1.3.5
+i) Resolved tagline issue.
+
+Version 1.3.6
+i) Resolved dropdown menu issue.
+
+Version 1.3.7
+i) Added toggle menu in responsive.
+
+Version 1.3.8
+i) Changed pricing.
+
+Version 1.3.9
+i) Updated long slider description problem.
+
+Version 1.4
+i) Theme Check issue solved.
