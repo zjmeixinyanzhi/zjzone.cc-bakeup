@@ -92,8 +92,8 @@ endif; ?>
 				<div class="very-top-header" id="very-top-header">
 					<div class="container">
 						<?php
-						$llorix_one_lite_very_top_header_phone = get_theme_mod( 'llorix_one_lite_very_top_header_phone',esc_html__( '(+9) 0999.500.400','llorix-one-lite' ) );
-						$llorix_one_lite_very_top_header_phone_text = get_theme_mod( 'llorix_one_lite_very_top_header_phone_text',esc_html__( 'Call us: ','llorix-one-lite' ) );
+						$llorix_one_lite_very_top_header_phone = get_theme_mod( 'llorix_one_lite_very_top_header_phone',esc_html__( '','llorix-one-lite' ) );
+						$llorix_one_lite_very_top_header_phone_text = get_theme_mod( 'llorix_one_lite_very_top_header_phone_text',esc_html__( '','llorix-one-lite' ) );
 
 
 						if ( ! empty( $llorix_one_lite_very_top_header_phone ) || ! empty( $llorix_one_lite_very_top_header_phone_text ) ) {
