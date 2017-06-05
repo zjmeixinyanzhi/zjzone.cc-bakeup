@@ -3,7 +3,7 @@
 Plugin Name: WPJAM BASIC
 Plugin URI: http://wpjam.net/item/wpjam-basic/
 Description: WPJAM 常用的函数和 Hook，屏蔽所有 WordPress 所有不常用的功能。「最新版本已包含<a href="https://wordpress.org/plugins/wpjam-qiniu/">七牛插件</a>，并兼容1.4.5及以上版本七牛插件。如果启用该版本插件，请先停用七牛1.4.5版本以下插件。」
-Version: 2.6.2
+Version: 2.6.3
 Author: Denis
 Author URI: http://blog.wpjam.com/
 */
