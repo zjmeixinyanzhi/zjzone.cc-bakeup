@@ -3,7 +3,7 @@
 Plugin Name: Page Builder by SiteOrigin
 Plugin URI: https://siteorigin.com/page-builder/
 Description: A drag and drop, responsive page builder that simplifies building your website.
-Version: 2.5.4
+Version: 2.5.10
 Author: SiteOrigin
 Author URI: https://siteorigin.com
 License: GPL3
@@ -11,11 +11,11 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Donate link: http://siteorigin.com/page-builder/#donate
 */
 
-define( 'SITEORIGIN_PANELS_VERSION', '2.5.4' );
+define( 'SITEORIGIN_PANELS_VERSION', '2.5.10' );
 if ( ! defined( 'SITEORIGIN_PANELS_JS_SUFFIX' ) ) {
 	define( 'SITEORIGIN_PANELS_JS_SUFFIX', '.min' );
 }
-define( 'SITEORIGIN_PANELS_VERSION_SUFFIX', '-25' );
+define( 'SITEORIGIN_PANELS_VERSION_SUFFIX', '-2510' );
 
 require_once plugin_dir_path( __FILE__ ) . 'inc/functions.php';
 
@@ -263,7 +263,7 @@ class SiteOrigin_Panels {
 	}
 
 	/**
-	 * Filter the content of the panel, adding all the widgets.
+	 * Generate post content for the current post.
 	 *
 	 * @param $content
 	 *
@@ -272,7 +272,7 @@ class SiteOrigin_Panels {
 	 * @filter the_content
 	 */
 	public function generate_post_content( $content ) {
-		global $post;
+		global $post, $preview;
 		if ( empty( $post ) && ! in_the_loop() ) {
 			return $content;
 		}
@@ -280,13 +280,21 @@ class SiteOrigin_Panels {
 		if ( ! apply_filters( 'siteorigin_panels_filter_content_enabled', true ) ) {
 			return $content;
 		}
-
+		
+		$post_id = get_the_ID();
+		// If we're viewing a preview make sure we load and render the autosave post's meta.
+		if ( $preview ) {
+			$preview_post = wp_get_post_autosave( $post_id );
+			if ( ! empty( $preview_post ) ) {
+				$post_id = $preview_post->ID;
+			}
+		}
 		// Check if this post has panels_data
-		if ( get_post_meta( $post->ID, 'panels_data', true ) ) {
+		if ( get_post_meta( $post_id, 'panels_data', true ) ) {
 			$panel_content = SiteOrigin_Panels::renderer()->render(
-				get_the_ID(),
+				$post_id,
 				// Add CSS if this is not the main single post, this is handled by add_single_css
-				get_the_ID() !== get_queried_object_id()
+				$preview || $post_id !== get_queried_object_id()
 			);
 
 			if ( ! empty( $panel_content ) ) {
@@ -314,15 +322,37 @@ class SiteOrigin_Panels {
 
 		return $content;
 	}
-
+	
+	/**
+	 * Generate CSS for the current post
+	 */
 	public function generate_post_css() {
 		if( is_singular() && get_post_meta( get_the_ID(), 'panels_data', true ) ) {
 			$renderer = SiteOrigin_Panels::renderer();
 			$renderer->add_inline_css( get_the_ID(), $renderer->generate_css( get_the_ID() ) );
 		}
 	}
-
+	
+	/**
+	 * Get cached post content for the current post
+	 *
+	 * @param $content
+	 *
+	 * @return string
+	 */
 	public function cached_post_content( $content ){
+		if ( post_password_required( get_the_ID() ) ) {
+			// Don't use cache for password protected
+			return $this->generate_post_content( $content );
+		}
+		global $preview;
+		if ( $preview ) {
+			// If we're previewing a post, rather call `generate_post_content` and `generate_post_css` at the right time.
+			add_filter( 'the_content', array( $this, 'generate_post_content' ) );
+			add_filter( 'wp_enqueue_scripts', array( $this, 'generate_post_css' ) );
+			return $content;
+		}
+		
 		if (
 			! in_the_loop() ||
 			! apply_filters( 'siteorigin_panels_filter_content_enabled', true ) ||
@@ -330,16 +360,26 @@ class SiteOrigin_Panels {
 		) {
 			return $content;
 		}
-
+		
 		$cache = SiteOrigin_Panels_Cache_Renderer::single();
-		return $cache->get( 'html', get_the_ID() );
+		$html = $cache->get( 'html', get_the_ID() );
+		
+		return $html;
 	}
-
+	
+	/**
+	 * Add cached CSS for the current post
+	 */
 	public function cached_post_css(){
+		if( post_password_required( get_the_ID() ) ) {
+			// Don't use cache for password protected
+			return $this->generate_post_css();
+		}
+		
 		if( is_singular() && get_post_meta( get_the_ID(), 'panels_data', true ) ) {
 			$cache = SiteOrigin_Panels_Cache_Renderer::single();
-			$stored = $cache->get( 'css', get_the_ID() );
-			SiteOrigin_Panels::renderer()->add_inline_css( get_the_ID(), $stored );
+			$css = $cache->get( 'css', get_the_ID() );
+			SiteOrigin_Panels::renderer()->add_inline_css( get_the_ID(), $css );
 		}
 	}
 
@@ -516,6 +556,31 @@ class SiteOrigin_Panels {
 	 */
 	public function strip_before_js(){
 		?><script type="text/javascript">document.body.className = document.body.className.replace("siteorigin-panels-before-js","");</script><?php
+	}
+	
+	/**
+	 * Should we display premium addon messages
+	 *
+	 * @return bool
+	 */
+	public static function display_premium_teaser(){
+		return siteorigin_panels_setting( 'display-teaser' ) &&
+			   apply_filters( 'siteorigin_premium_upgrade_teaser', true ) &&
+			   ! defined( 'SITEORIGIN_PREMIUM_VERSION' );
+	}
+	
+	/**
+	 * Get the premium upgrade URL
+	 *
+	 * @return string
+	 */
+	public static function premium_url() {
+		$ref = apply_filters( 'siteorigin_premium_affiliate_id', '' );
+		$url = 'https://siteorigin.com/downloads/premium/?featured_plugin=siteorigin-panels';
+		if( $ref ) {
+			$url = add_query_arg( 'ref', urlencode( $ref ), $url );
+		}
+		return $url;
 	}
 }
 
